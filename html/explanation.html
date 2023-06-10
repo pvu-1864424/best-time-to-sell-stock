@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Explanation</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="icon" type="image/x-icon" href="../images/favicon.png">
+    <script src="https://kit.fontawesome.com/6f5be9a53f.js" crossorigin="anonymous"></script>
+    <script src="../index.js"></script>
+</head>
+<body>
+    <div class="nav-container">
+        <!--nav bar-->
+        <nav>
+            <a href="#header"><img src="images/logo.png" class="logo"></a>
+            <ul id="sidemenu">
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="question.html">Question</a></li>
+                <li><a href="explanation.html">Explanation </a></li>
+                <li><a href="solution.html">Solution </a></li>
+                <i class="fa-solid fa-xmark" id="closemenu"></i>
+            </ul>
+            <i class="fa-solid fa-bars" id="openmenu"></i>
+        </nav>
+    </div>
+    <div class="body-container">
+        <h1>Best Time to Buy & Sell Stock IV</h1>
+        <div id="company-info">
+            <h1 id="company-name">Approach Explanation</h1>
+            <p>For this question, we would utilize dynamic programming(dp) as our main aproach to reduce redundant calculations.</p>
+            <p>Step 1: Check special case of whether the given k or array's length is smaller or equal to 0. If so, we would return 0</p>    
+            <p>Step 2: Check whether 2 * k is greater than the prices array's length. If so, iterate over the price array and calculate
+                the maximum profit by calculate the sum of positive differences between consecutive prices.
+            </p>
+            <p>Step 3: If none of special case is applied, We created a three-dimensional array to store the maximum profit at each state (the day number,
+                transaction number used, and stock holding status (0: not hold / 1: hold)). The dimensions for this array are: n - the length of the prices 
+                array; k + 1 - the maximum number of transaction + 1; 2 - two status of whether holding stock or not. Initialize the dp array with big negative number.
+            </p>
+            <p>Step 4: Set dp[0][0][0] to be 0, which mean that no transaction has been performed and no stock is held. Set dp[0][1][1] to be negative of the first price
+                in the prices array, which mean that the first transaction has been performed and the first stock is held.
+            </p>
+            <p>Step 5: Fill the dp array using nested loops. For each day i from 1 to n-1 and each transaction count j from 0 to k, we calculate the maximum profit based on two transition equations:</p>
+            <ul>
+                <li><p>dp[i][j][0] represents the maximum profit on day i with j transactions performed and no stock held. It is calculated by taking the maximum of either continuing to not hold the stock 
+                    from the previous day (dp[i-1][j][0]) or selling the stock on the current day (dp[i-1][j][1] + prices[i]).
+                </p></li>
+                <li><p>dp[i][j][1] represents the maximum profit on day i with j transactions performed and holding the stock. It is calculated by taking the maximum of either continuing to hold the stock 
+                    from the previous day (dp[i-1][j][1]) or buying the stock on the current day (the maximum profit from not holding the stock on the previous day minus the current stock price: dp[i-1][j-1][0] - prices[i]). 
+                    The condition if (j > 0) ensures that we can only hold stock if we have performed at least one transaction.
+                </p></li>
+            </ul>
+            <p>Step 6: Once the dp array is filled, we can find the maximum profit by iterating over the last day's values( (dp[n-1][j][0]) for all possible transaction counts j from 0 to k.)</p>
+            <p>Step 7: Return the maximum profit as res(result).</p>
+        </div>
+    </div>
+    <div id="copyright">
+        <p>Copyright &copy; Phuong (Charles) Vu.</p>
+    </div>
+</body>
+</html>
